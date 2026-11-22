@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Pencil Portraits · Kochi</title>
+  <meta name="description" content="Hand-drawn pencil portraits in Kochi, Kerala. Order a custom portrait from your photos." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400;12..96,600;12..96,700&family=Hanken+Grotesk:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #e8e6e3;
+      --bg-elevated: #f4f3f1;
+      --text: #2a2a28;
+      --text-muted: #5c5c58;
+      --border: #c8c6c2;
+      --accent: #c9a227;
+      --accent-hover: #b08f1f;
+      --frame: #3d3d3a;
+      --shadow: rgba(42, 42, 40, 0.12);
+      --error: #b33a3a;
+      --success: #2d6a4f;
+      --focus: #2a2a28;
+      --radius: 4px;
+      --font-head: "Bricolage Grotesque", system-ui, sans-serif;
+      --font-body: "Hanken Grotesk", system-ui, sans-serif;
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1c1c1a;
+        --bg-elevated: #262624;
+        --text: #e8e6e3;
+        --text-muted: #a8a6a2;
+        --border: #3d3d3a;
+        --accent: #d4b03a;
+        --accent-hover: #e0c04a;
+        --frame: #4a4a46;
+        --shadow: rgba(0, 0, 0, 0.35);
+        --error: #e07070;
+        --success: #6bcf9b;
+        --focus: #e8e6e3;
+      }
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+      *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+
+    body {
+      font-family: var(--font-body);
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--text);
+      background: var(--bg);
+      min-height: 100vh;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    img { max-width: 100%; height: auto; display: block; }
+
+    :focus-visible {
+      outline: 2px solid var(--focus);
+      outline-offset: 3px;
+    }
+
+    .container {
+      width: min(100% - 2rem, 1100px);
+      margin-inline: auto;
+    }
+
+    /* Header */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: color-mix(in srgb, var(--bg) 92%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--border);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.85rem 0;
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: 1.15rem;
+      letter-spacing: -0.02em;
+    }
+
+    .logo span { color: var(--accent); }
+
+    nav {
+      display: flex;
+      gap: 0.25rem;
+    }
+
+    nav a {
+      padding: 0.6rem 0.85rem;
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--text-muted);
+      border-radius: var(--radius);
+      min-height: 48px;
+      display: inline-flex;
+      align-items: center;
+    }
+
+    nav a:hover { color: var(--text); background: var(--bg-elevated); }
+
+    /* Hero */
+    .hero {
+      padding: 4rem 0 3.5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-family: var(--font-head);
+      font-weight: 700;
+      font-size: clamp(2rem, 5.5vw, 3.25rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+      margin-bottom: 0.75rem;
+    }
+
+    .hero p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+      max-width: 32rem;
+      margin: 0 auto 1.75rem;
+    }
+
+    .stroke-line {
+      display: block;
+      width: min(280px, 70%);
+      margin: 0 auto 2rem;
+      overflow: visible;
+    }
+
+    .stroke-line path {
+      fill: none;
+      stroke: var(--text);
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-dasharray: 320;
+      stroke-dashoffset: 320;
+      animation: draw 1.4s ease-out 0.3s forwards;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .stroke-line path { stroke-dashoffset: 0; animation: none; }
+    }
+
+    @keyframes draw {
+      to { stroke-dashoffset: 0; }
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0.75rem 1.5rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: var(--radius);
+      cursor: pointer;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #1a1a18;
+    }
+
+    .btn-primary:hover:not(:disabled) { background: var(--accent-hover); }
+    .btn-primary:disabled {
+      opacity: 0.65;
+      cursor: not-allowed;
+    }
+
+    /* Gallery */
+    section { padding: 3.5rem 0; }
+
+    .section-title {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: clamp(1.5rem, 3vw, 1.85rem);
+      letter-spacing: -0.02em;
+      margin-bottom: 1.75rem;
+      text-align: center;
+    }
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.5rem;
+    }
+
+    @media (min-width: 520px) {
+      .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+
+    @media (min-width: 860px) {
+      .gallery-grid { grid-template-columns: repeat(4, 1fr); gap: 1.25rem; }
+    }
+
+    .portrait {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      box-shadow: 0 4px 16px var(--shadow);
+    }
+
+    .portrait-frame {
+      aspect-ratio: 3 / 4;
+      background:
+        repeating-linear-gradient(
+          -45deg,
+          transparent,
+          transparent 4px,
+          color-mix(in srgb, var(--border) 40%, transparent) 4px,
+          color-mix(in srgb, var(--border) 40%, transparent) 5px
+        ),
+        var(--bg);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .portrait-frame img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      inset: 0;
+    }
+
+    .portrait-frame .placeholder {
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      text-align: center;
+      padding: 1rem;
+      opacity: 0.7;
+    }
+
+    .portrait figcaption {
+      padding: 0.75rem 1rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    /* Prices */
+    .prices-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1rem;
+      max-width: 640px;
+      margin: 0 auto;
+    }
+
+    @media (min-width: 600px) {
+      .prices-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+
+    .price-card {
+      background: var(--bg-elevated);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem 1.25rem;
+      text-align: center;
+    }
+
+    .price-card h3 {
+      font-family: var(--font-head);
+      font-weight: 600;
+      font-size: 1.1rem;
+      margin-bottom: 0.35rem;
+    }
+
+    .price-card .amount {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: -0.02em;
+    }
+
+    .price-card p {
+      font-size: 0.85rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+    }
+
+    /* Order form */
+    .order-section {
+      background: var(--bg-elevated);
+      border-block: 1px solid var(--border);
+    }
+
+    form {
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 1.1rem;
+    }
+
+    @media (min-width: 640px) {
+      .form-grid {
+        grid-template-columns: 1fr 1fr;
+      }
+      .form-grid .full { grid-column: 1 / -1; }
+    }
+
+    label {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 500;
+      margin-bottom: 0.35rem;
+      color: var(--text);
+    }
+
+    .required::after {
+      content: " *";
+      color: var(--error);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 48px;
+      padding: 0.65rem 0.85rem;
+      font-family: var(--font-body);
+      font-size: 1rem;
+      color: var(--text);
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      appearance: none;
+    }
+
+    textarea {
+      min-height: 110px;
+      resize: vertical;
+      padding-top: 0.75rem;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--text-muted);
+      outline: none;
+      box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 35%, transparent);
+    }
+
+    input[type="file"] {
+      padding: 0.55rem 0.75rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+    }
+
+    .field-error {
+      font-size: 0.85rem;
+      color: var(--error);
+      margin-top: 0.3rem;
+      display: none;
+    }
+
+    .field-error.visible { display: block; }
+
+    .honeypot {
+      position: absolute;
+      left: -9999px;
+      opacity: 0;
+      height: 0;
+      width: 0;
+      overflow: hidden;
+    }
+
+    .form-actions {
+      margin-top: 1.5rem;
+    }
+
+    .form-actions .btn {
+      width: 100%;
+    }
+
+    @media (min-width: 640px) {
+      .form-actions .btn { width: auto; min-width: 200px; }
+    }
+
+    .status {
+      margin-top: 1.25rem;
+      padding: 0.85rem 1rem;
+      border-radius: var(--radius);
+      font-size: 0.95rem;
+      display: none;
+    }
+
+    .status.visible { display: block; }
+    .status.success {
+      background: color-mix(in srgb, var(--success) 15%, transparent);
+      color: var(--success);
+      border: 1px solid color-mix(in srgb, var(--success) 40%, transparent);
+    }
+    .status.error {
+      background: color-mix(in srgb, var(--error) 12%, transparent);
+      color: var(--error);
+      border: 1px solid color-mix(in srgb, var(--error) 35%, transparent);
+    }
+
+    /* Footer */
+    footer {
+      padding: 2.5rem 0;
+      text-align: center;
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    footer a { color: var(--accent); }
+    footer a:hover { text-decoration: underline; }
+
+    .footer-note { margin-top: 0.4rem; font-size: 0.85rem; }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="#" class="logo">Pencil<span>.</span>Kochi</a>
+      <nav aria-label="Main">
+        <a href="#gallery">Gallery</a>
+        <a href="#prices">Prices</a>
+        <a href="#order">Order</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container">
+        <h1>Your people, drawn by hand.</h1>
+        <p>Custom pencil portraits from your photos — crafted in Kochi, shipped anywhere in India.</p>
+        <svg class="stroke-line" viewBox="0 0 280 24" aria-hidden="true">
+          <path d="M4 14 Q 40 4, 70 12 T 140 10 T 210 14 T 276 8" />
+        </svg>
+        <a href="#order" class="btn btn-primary">Order a portrait</a>
+      </div>
+    </section>
+
+    <section id="gallery" aria-labelledby="gallery-title">
+      <div class="container">
+        <h2 id="gallery-title" class="section-title">Gallery</h2>
+        <div class="gallery-grid">
+          <figure class="portrait">
+            <div class="portrait-frame">
+              <img src="/photos/portrait-1.jpg" alt="Pencil portrait of a young woman" loading="lazy"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+              <span class="placeholder" style="display:none">Portrait sample</span>
+            </div>
+            <figcaption>Single portrait · A4</figcaption>
+          </figure>
+          <figure class="portrait">
+            <div class="portrait-frame">
+              <img src="/photos/portrait-2.jpg" alt="Pencil portrait of a couple" loading="lazy"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+              <span class="placeholder" style="display:none">Portrait sample</span>
+            </div>
+            <figcaption>Couple · A3</figcaption>
+          </figure>
+          <figure class="portrait">
+            <div class="portrait-frame">
+              <img src="/photos/portrait-3.jpg" alt="Pencil portrait of a family" loading="lazy"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+              <span class="placeholder" style="display:none">Portrait sample</span>
+            </div>
+            <figcaption>Family group</figcaption>
+          </figure>
+          <figure class="portrait">
+            <div class="portrait-frame">
+              <img src="/photos/portrait-4.jpg" alt="Pencil portrait of a child" loading="lazy"
+                   onerror="this.style.display='none'; this.nextElementSibling.style.display='block'" />
+              <span class="placeholder" style="display:none">Portrait sample</span>
+            </div>
+            <figcaption>Memorial portrait</figcaption>
+          </figure>
+        </div>
+      </div>
+    </section>
+
+    <section id="prices" aria-labelledby="prices-title">
+      <div class="container">
+        <h2 id="prices-title" class="section-title">Prices</h2>
+        <div class="prices-grid">
+          <div class="price-card">
+            <h3>A4 Single</h3>
+            <div class="amount">₹2,500</div>
+            <p>One person, A4 size</p>
+          </div>
+          <div class="price-card">
+            <h3>A3 Couple</h3>
+            <div class="amount">₹4,500</div>
+            <p>Two people, A3 size</p>
+          </div>
+          <div class="price-card">
+            <h3>Family / Group</h3>
+            <div class="amount">₹6,500+</div>
+            <p>3+ people, custom size</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="order" class="order-section" aria-labelledby="order-title">
+      <div class="container">
+        <h2 id="order-title" class="section-title">Order a portrait</h2>
+        <form id="order-form" novalidate>
+          <div class="honeypot" aria-hidden="true">
+            <label for="website">Website</label>
+            <input type="text" id="website" name="website" tabindex="-1" autocomplete="off" />
+          </div>
+
+          <div class="form-grid">
+            <div>
+              <label for="name" class="required">Name</label>
+              <input type="text" id="name" name="name" required maxlength="100" autocomplete="name" />
+              <div class="field-error" id="name-error"></div>
+            </div>
+            <div>
+              <label for="email" class="required">Email</label>
+              <input type="email" id="email" name="email" required maxlength="120" autocomplete="email" />
+              <div class="field-error" id="email-error"></div>
+            </div>
+            <div>
+              <label for="phone" class="required">Phone / WhatsApp</label>
+              <input type="tel" id="phone" name="phone" required maxlength="20" autocomplete="tel" />
+              <div class="field-error" id="phone-error"></div>
+            </div>
+            <div>
+              <label for="occasion" class="required">Occasion</label>
+              <select id="occasion" name="occasion" required>
+                <option value="">Select occasion</option>
+                <option value="Birthday">Birthday</option>
+                <option value="Wedding">Wedding</option>
+                <option value="Anniversary">Anniversary</option>
+                <option value="Gift">Gift</option>
+                <option value="Memorial">Memorial</option>
+                <option value="Other">Other</option>
+              </select>
+              <div class="field-error" id="occasion-error"></div>
+            </div>
+            <div>
+              <label for="size" class="required">Size</label>
+              <select id="size" name="size" required>
+                <option value="">Select size</option>
+                <option value="A4 Single">A4 Single — ₹2,500</option>
+                <option value="A3 Couple">A3 Couple — ₹4,500</option>
+                <option value="Family / Group">Family / Group — ₹6,500+</option>
+              </select>
+              <div class="field-error" id="size-error"></div>
+            </div>
+            <div>
+              <label for="needed_by">Needed by</label>
+              <input type="date" id="needed_by" name="needed_by" />
+              <div class="field-error" id="needed_by-error"></div>
+            </div>
+            <div class="full">
+              <label for="photos" class="required">Reference photos (up to 3)</label>
+              <input type="file" id="photos" name="photos" accept="image/jpeg,image/png,image/webp" multiple required />
+              <div class="field-error" id="photos-error"></div>
+            </div>
+            <div class="full">
+              <label for="message">Message</label>
+              <textarea id="message" name="message" maxlength="1000" placeholder="Any details about the subjects, style preferences, or delivery notes…"></textarea>
+              <div class="field-error" id="message-error"></div>
+            </div>
+          </div>
+
+          <div class="form-actions">
+            <button type="submit" class="btn btn-primary" id="submit-btn">Send order</button>
+          </div>
+
+          <div class="status" id="form-status" role="status" aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>Hand-drawn pencil portraits · Kochi, Kerala</p>
+      <p class="footer-note">Questions? Email the address you used on your order — replies go straight to the artist.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const form = document.getElementById("order-form");
+      const submitBtn = document.getElementById("submit-btn");
+      const statusEl = document.getElementById("form-status");
+      const photosInput = document.getElementById("photos");
+
+      const MAX_FILES = 3;
+      const MAX_SIZE = 5 * 1024 * 1024; // 5 MB
+      const ALLOWED = ["image/jpeg", "image/png", "image/webp"];
+
+      function showError(id, msg) {
+        const el = document.getElementById(id + "-error");
+        if (!el) return;
+        el.textContent = msg;
+        el.classList.toggle("visible", !!msg);
+      }
+
+      function clearErrors() {
+        document.querySelectorAll(".field-error").forEach((el) => {
+          el.textContent = "";
+          el.classList.remove("visible");
+        });
+        statusEl.className = "status";
+        statusEl.textContent = "";
+      }
+
+      function validate() {
+        clearErrors();
+        let ok = true;
+
+        const name = form.name.value.trim();
+        if (!name) { showError("name", "Please enter your name."); ok = false; }
+        else if (name.length > 100) { showError("name", "Name is too long."); ok = false; }
+
+        const email = form.email.value.trim();
+        if (!email) { showError("email", "Please enter your email."); ok = false; }
+        else if (!/[^\s@]+@[^\s@]+\.[^\s@]+/.test(email)) {
+          showError("email", "Please enter a valid email address.");
+          ok = false;
+        }
+
+        const phone = form.phone.value.trim();
+        if (!phone) { showError("phone", "Please enter a phone or WhatsApp number."); ok = false; }
+
+        if (!form.occasion.value) { showError("occasion", "Please select an occasion."); ok = false; }
+        if (!form.size.value) { showError("size", "Please select a size."); ok = false; }
+
+        const files = photosInput.files;
+        if (!files || files.length === 0) {
+          showError("photos", "Please upload at least one reference photo.");
+          ok = false;
+        } else if (files.length > MAX_FILES) {
+          showError("photos", "You can upload a maximum of 3 photos.");
+          ok = false;
+        } else {
+          for (let i = 0; i < files.length; i++) {
+            const f = files[i];
+            if (!ALLOWED.includes(f.type)) {
+              showError("photos", "Only JPG, PNG and WebP images are allowed.");
+              ok = false;
+              break;
+            }
+            if (f.size > MAX_SIZE) {
+              showError("photos", "Each photo must be under 5 MB.");
+              ok = false;
+              break;
+            }
+          }
+        }
+
+        if (form.message.value.length > 1000) {
+          showError("message", "Message is too long (max 1000 characters).");
+          ok = false;
+        }
+
+        return ok;
+      }
+
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+        if (!validate()) return;
+
+        // Honeypot
+        if (form.website.value) {
+          statusEl.textContent = "Order received. Thank you!";
+          statusEl.className = "status visible success";
+          form.reset();
+          return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Sending order…";
+
+        const data = new FormData(form);
+        // Ensure photos are under the expected key
+        data.delete("photos");
+        for (const f of photosInput.files) {
+          data.append("photos", f);
+        }
+
+        try {
+          const res = await fetch("/api/order", {
+            method: "POST",
+            body: data,
+          });
+          const json = await res.json().catch(() => ({}));
+
+          if (res.ok) {
+            statusEl.textContent = json.message || "Order sent successfully. The artist will reply soon.";
+            statusEl.className = "status visible success";
+            form.reset();
+          } else {
+            statusEl.textContent = json.detail || json.message || "Something went wrong. Please try again.";
+            statusEl.className = "status visible error";
+          }
+        } catch (err) {
+          statusEl.textContent = "Could not reach the server. Please check your connection and try again.";
+          statusEl.className = "status visible error";
+        } finally {
+          submitBtn.disabled = false;
+          submitBtn.textContent = "Send order";
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
